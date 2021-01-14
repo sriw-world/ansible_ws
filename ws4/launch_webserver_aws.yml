@@ -1,0 +1,28 @@
+- hosts: all
+
+  tasks:
+  - name: "wait for 2 minutes"
+    pause:
+       minutes: 2
+
+  - name: "Installing httpd"
+    package:
+        name: httpd
+        state: present
+
+  - name: "copy the webpages"
+    copy:
+        src: /root/Desktop/ansible_ws/ws4/main.html
+        dest: /var/www/html
+    notify: "restarting_httpd"
+
+  - name: "Starting httpd"
+    service:
+        name: httpd
+        state: "started"
+
+  handlers:
+  - name: "restarting_httpd"
+    service:
+        name: httpd
+        state: restarted  

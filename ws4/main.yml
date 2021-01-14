@@ -1,0 +1,10 @@
+- name: "Provisioning ec2"
+  import_playbook: launch_ec2.yml
+
+- hosts: localhost
+  tasks:
+  - pause:
+     minutes: 2
+
+- name: "Configuring Webserver inside"
+  import_playbook: launch_webserver_aws.yml

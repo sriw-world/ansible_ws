@@ -1,0 +1,61 @@
+- hosts: "localhost"
+  gather_facts: no
+  vars:
+          - secret_key : XXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+          - access_key : XXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+              
+    
+  tasks:
+  - name: "create security group"
+    ec2_group:
+            name : ansible_sg
+            description: "  security group"            
+            region: us-east-1
+            aws_secret_key: "{{ secret_key }}"
+            aws_access_key: "{{ access_key }}"
+            rules:
+            - proto: tcp
+              from_port: 80
+              to_port: 80
+              cidr_ip: 0.0.0.0/0
+            - proto: tcp
+              from_port: 22
+              to_port: 22
+              cidr_ip: 0.0.0.0/0
+            rules_egress:
+            - proto: all
+              cidr_ip: 0.0.0.0/0
+
+  - name: "launch  ec2"
+    ec2:
+            key_name: sar_ansible
+            instance_type: t2.micro
+            image: ami-096fda3c22c1c990a
+            wait: true
+            wait_timeout: 500
+            group: ansible_sg
+            count: 1
+            vpc_subnet_id: subnet-f93654b4
+            assign_public_ip: yes
+            region: us-east-1
+            state: present
+            aws_access_key: "{{ access_key }}"
+            aws_secret_key: "{{ secret_key }}"
+            instance_tags:
+                    Name: webserver
+    register: ec2_out
+ 
+  - debug:
+     var:  ec2_out['instances'][0]['private_ip']
+  
+  - name: "copying content to host file"
+    copy:
+       content: "{{ ec2_out.instances[0].public_ip      }}"
+       dest: "/root/ip.txt"
+  - name: "wait for 2 minutes"
+    pause:
+       minutes: 2    
+
+
+        

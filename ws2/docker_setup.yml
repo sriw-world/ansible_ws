@@ -1,0 +1,53 @@
+- hosts: all
+  tasks:
+  - name: "setting up docker"
+    yum_repository:
+      name: docker
+      description: desc for docker
+      baseurl: https://download.docker.com/linux/centos/7/x86_64/stable
+      gpgcheck: no
+
+  - command:  "yum install docker-ce --nobest -y"
+
+  - name: "starting docker in target node"
+    service:
+      name: docker
+      state: started
+      enabled: yes
+
+  - name: "install python"
+    package:
+      name: python36
+      state: present
+
+  - name: "Install python sdk of  docker" 
+    command: pip3 install docker
+
+  - name: "downloading httpd image from dockerhub"
+    docker_image: 
+      name: httpd
+      source: pull
+
+  - name: "creating directory"
+    file: 
+      path: /root/workspace
+      state: directory
+
+  - name: "creating web.html"
+    copy:
+      dest: /root/workspace/web.html
+      content: "This is configured using ansible by Sarthak Srivastava"
+
+  - name: "setting up docker container"
+    docker_container:
+      name: mywebserver
+      image: httpd
+
+      state: started
+      exposed_ports: "80"
+      ports: "8080:80"
+      volumes: /root/workspace:/usr/local/apache2/htdocs/
+
+      
+      
+     
