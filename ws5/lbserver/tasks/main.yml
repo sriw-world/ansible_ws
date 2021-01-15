@@ -1,0 +1,16 @@
+---
+# tasks file for lbserver
+- name: "install HAPROXY"
+  package:
+     name: "haproxy"
+     state: present
+
+- name: "copy HAPROXY configuration files to LoadBalancer"
+  template:
+     src: "/root/Desktop/ansible_ws/ws5/lbserver/files/haproxy.cfg"
+     dest: /etc/haproxy/
+
+- name: "restart HAPROXY"
+  service:
+     name: "haproxy"   
+     state: "started"
