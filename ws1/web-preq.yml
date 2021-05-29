@@ -1,3 +1,5 @@
+########make sure optical device is connected
+
 - hosts : all
   tasks:
   - file:
