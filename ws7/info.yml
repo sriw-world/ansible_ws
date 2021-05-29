@@ -1,0 +1,31 @@
+- hosts: all
+
+  tasks:
+          - debug:
+                  msg: "{{ ansible_facts }}"
+
+           
+          - debug:
+                  msg: "{{ ansible_facts['all_ipv4_addresses'] }}"
+
+
+          - debug:
+                  msg: "{{ ansible_facts['default_ipv4'] }}"
+
+
+          - debug:
+                  msg: "{{ ansible_facts['python_version'] }}"
+
+
+          - debug:
+                  msg: "{{ ansible_facts['date_time'] }}"
+
+          - debug:
+                  msg: "{{ ansible_facts['os_family'] }}"
+
+          - debug:
+                  msg: "{{ ansible_facts['memory_mb'] }}"
+          - debug:
+                  msg: "{{ ansible_facts['ansible_system'] }}"
+
+

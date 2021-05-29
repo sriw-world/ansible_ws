@@ -2,6 +2,8 @@
 
   vars:
     - dvd_dir: "/dvd1"
+    - folder_httpd: "/var/www/lw"
+    - port_httpd: "8083"
 
   tasks:
 
@@ -34,16 +36,16 @@
 
   - file:
           state: "directory"
-          path: "/var/www/lw"
+          path: "{{ folder_httpd}}"
 
-  - copy:
+  - template:
           src: "/root/Desktop/ansible_ws/ws6/lw.conf"
           dest: "/etc/httpd/conf.d/"
           
 
   - copy:
           content: "sadadsaadasa"
-          dest: "/var/www/lw/abc.html"
+          dest: "{{ folder_httpd }}/abc.html"
 
   - service:
           name: "httpd"
@@ -51,7 +53,7 @@
           enabled: yes
 
   - firewalld:
-          port: "8083/tcp"
+          port: "{{ port_httpd}}/tcp"
           immediate: yes
           permanent: yes
           state: "enabled"
