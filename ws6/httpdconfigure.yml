@@ -44,11 +44,11 @@
 
   - service:
           name: "httpd"
-          state: "restarted"
+          state: restarted
           enabled: yes
 
   - firewalld:
-          port: "80/tcp"
+          port: "8083/tcp"
           immediate: yes
           permanent: yes
           state: "enabled"
