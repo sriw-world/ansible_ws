@@ -1,14 +1,17 @@
 - hosts: all
 
+  vars:
+    - dvd_dir: "/dvd1"
+
   tasks:
 
   - file:
           state: "directory"
-          path: "/dvd1"
+          path: "{{ dvd_dir}}"
 
   - mount:
           src: "/dev/cdrom"
-          path: "/dvd1"
+          path: "{{ dvd_dir }}"
           fstype: "iso9660"
           state: "mounted"
 
@@ -16,14 +19,14 @@
           name: "mydvd1"
           description: "configure appstream"
           gpgcheck: no
-          baseurl: "/dvd1/AppStream"
+          baseurl: "{{ dvd_dir }}/AppStream"
 
 
   - yum_repository:
           name: "mydvd2"
           description: "configure baseos"
           gpgcheck: no
-          baseurl: "/dvd1/BaseOS"
+          baseurl: "{{ dvd_dir }}/BaseOS"
 
   - package:
           name: "httpd"
