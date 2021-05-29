@@ -1,0 +1,54 @@
+- hosts: all
+
+  tasks:
+
+  - file:
+          state: "directory"
+          path: "/dvd1"
+
+  - mount:
+          src: "/dev/cdrom"
+          path: "/dvd1"
+          fstype: "iso9660"
+          state: "mounted"
+
+  - yum_repository:
+          name: "mydvd1"
+          description: "configure appstream"
+          gpgcheck: no
+          baseurl: "/dvd1/AppStream"
+
+
+  - yum_repository:
+          name: "mydvd2"
+          description: "configure baseos"
+          gpgcheck: no
+          baseurl: "/dvd1/BaseOS"
+
+  - package:
+          name: "httpd"
+          state: present
+
+  - file:
+          state: "directory"
+          path: "/var/www/lw"
+
+  - copy:
+          src: "/root/Desktop/ansible_ws/ws6/lw.conf"
+          dest: "/etc/httpd/conf.d/"
+          
+
+  - copy:
+          content: "sadadsaadasa"
+          dest: "/var/www/lw/abc.html"
+
+  - service:
+          name: "httpd"
+          state: "restarted"
+          enabled: yes
+
+  - firewalld:
+          port: "80/tcp"
+          immediate: yes
+          permanent: yes
+          state: "enabled"
