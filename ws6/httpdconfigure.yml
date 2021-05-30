@@ -1,10 +1,7 @@
 - hosts: all
 
-  vars:
-    - dvd_dir: "/dvd1"
-    - folder_httpd: "/var/www/lw"
-    - port_httpd: "8083"
-
+  vars_files:
+  - var.yml
   tasks:
 
   - file:
