@@ -9,11 +9,13 @@
           dest: "/var/www/html/index.html"
           content: "auth added to website"
 
+  # Control who can access the server
   - replace:
           path: "/etc/httpd/conf/httpd.conf"
           regexp: "AllowOverride None"
           replace: "AllowOverride AuthConfig"
 
+  #  htaccess access to htpasswd database
   - copy:
           dest: "/var/www/html/.htaccess"
           src: ".htaccess"
@@ -24,6 +26,7 @@
   - pip:
           name: "passlib"
 
+  # create user who can access the server
   - htpasswd:
           path: "/etc/www.passwd"
           name: "sarthak"
