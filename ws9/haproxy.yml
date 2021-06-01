@@ -1,0 +1,32 @@
+- hosts: [webserver]
+  tasks:
+  - package:
+          name: "httpd"
+
+  - copy:
+          dest: "/var/www/html/index.html"
+          content: "asdadasdas"
+
+  - service:
+          name: "httpd"
+          state: restarted
+
+
+- hosts: loadbalancer
+  tasks:
+  
+  - package:
+          name: "haproxy"
+
+  - template:
+          dest: "/etc/haproxy/haproxy.cfg"
+          src: "haproxy.cfg"
+  
+  - service:
+          name: "haproxy"
+
+
+           
+                  
+
+
