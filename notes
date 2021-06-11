@@ -1,0 +1,5 @@
+ignore_errors : used for error handling ie exception handling , used to step the task 
+
+when : used as if condition
+
+var in debug module : we dont have to use "" and {{  }}
