@@ -1,0 +1,12 @@
+- hosts: localhosst
+  
+  tasks:
+  
+  - mail:
+ 	hosts: smtp.gmail.com
+	port: 687
+	username: abc@gmail.com
+	password: *************
+	to: def@gmail.com
+	subject: ----------
+	body: ----------
