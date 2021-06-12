@@ -3,3 +3,7 @@ ignore_errors : used for error handling ie exception handling , used to step the
 when : used as if condition
 
 var in debug module : we dont have to use "" and {{  }}
+
+get_url: ##########to download image html page
+  url: "_____________"
+  dest: "/var/ww/html/abc.jpg"
