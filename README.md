@@ -16,3 +16,6 @@ ws7 -- ansible facts and default variable
 
 ws8 -- httpd authentication
 
+ws9 -- haproxy without roles
+
+ws10 -- smtp mail
